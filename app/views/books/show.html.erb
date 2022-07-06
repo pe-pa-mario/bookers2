@@ -1,27 +1,60 @@
 <body class="d-flex flex-column vh-100">
+ <script src="https://kit.fontawesome.com/d0a9bc3dab.js" crossorigin="anonymous"></script>
+
+
+
+ <% if @book.errors.any? %>
+  <%= @book.errors.count %>errors prohibited this book from being saved:
+
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
 
 <div class="container">
  <div class="row">
  <div class="col-md-3">
  <div>
- <h2>UserInfo</h2>
+ <h2>User info</h2>
  <%= image_tag current_user.get_profile_image(100,100) %>
-  <h3><%= current_user.name %></h3>
-  <h3><%= current_user.introduction %></h3>
+   <table class="table">
+  <tbody>
+   <tr></tr>
+   <tr>
+    <th>name</th>
+    <th>
+    <h3><%= @user.name %></h3>
+    </th>
+   </tr>
+   <tr>
+    <th>introduction</th>
+    <th>
+    <h3><%= @user.introduction %></h3>
+    </th>
+   </tr>
+  </tbody>
+ </table>
+<div class="row">
+ <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+ <i class= "fas fa-user-cog"></i>
+ <% end %>
+
 </div>
 
+</div>
 
-<h2>New Books</h2>
-<%= form_with model: @book do |f| %>
+ <h2>New book</h2>
+ <%= form_with model: @book_new do |f| %>
 
- <h4>Title</h4>
+  <h4>Title</h4>
  <%= f.text_field :title %>
 
  <h4>Opinion</h4>
  <%= f.text_area :body %>
-
  <%= f.submit 'Create Book' %>
-<% end %>
+ <% end %>
 </div>
 
 <div class="col-md-8 offset-md-1">
@@ -29,28 +62,26 @@
 
 
  <h1>Book detail</h1>
-	<thead>
-		<tr>
-			<th>Title</th>
-			<th>Opinion</th>
-		</tr>
-	</thead>
-
 	<tbody>
-		<% @books.each do  |b| %>
-			<tr>
-				<td><%= b.title %></td>
-				<td><%= b.body %></td>
-				<td><%= link_to "Edit", edit_book_path(b) %></td>
-				<td><%= link_to "Destroy", book_path(b), method: :delete %></td>
+		<tr>
+		 <td>
+		 <%= link_to user_path(@user.id) do %>
+			<%= image_tag @user.get_profile_image(100,100) %> <br>
+			<%= @user.name %>
+			<% end %>
+			</td>
+
+
+				<td><%=link_to @book.title %></td>
+				<td><%=@book.body %></td>
+				<% if @book.user == current_user %>
+				<td><%= link_to "Edit", edit_book_path(@book) %></td>
+				<td><%= link_to "Destroy", book_path(@book), method: :delete %></td>
+				<% end %>
 			</tr>
-		<% end %>
 	</tbody>
 </table>
 </div>
 </div>
 </div>
- <% if @book.user == current_user %>
-    <%= link_to "delete", book_path(@book), method: :delete %>
-  <% end %>
 </body>

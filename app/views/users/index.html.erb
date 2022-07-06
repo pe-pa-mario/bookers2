@@ -1,36 +1,60 @@
 <body class="d-flex flex-column vh-100">
+<script src="https://kit.fontawesome.com/d0a9bc3dab.js" crossorigin="anonymous"></script>
+
+
+
+
+
 
 <div class="container">
  <div class="row">
  <div class="col-md-3">
- <div>
- <h2>UserInfo</h2>
+ <h2>User info</h2>
  <%= image_tag current_user.get_profile_image(100,100) %>
-  <h3><%= current_user.name %></h3>
-  <h3><%= current_user.introduction %></h3>
+   <table class="table">
+  <tbody>
+   <tr></tr>
+   <tr>
+    <th>name</th>
+    <th>
+    <h3><%= @current_user.name %></h3>
+    </th>
+   </tr>
+   <tr>
+    <th>introduction</th>
+    <th>
+    <h3><%= @current_user.introduction %></h3>
+    </th>
+   </tr>
+  </tbody>
+ </table>
+ <div class="row">
+ <%= link_to edit_user_path(@user.id), class: "btn btn-outline-secondary btn-block" do %>
+ <i class= "fas fa-user-cog"></i>
+ <% end %>
+
 </div>
 
 
-<h2>New Books</h2>
-<%= form_with model: @book do |f| %>
+ <h2>New book</h2>
+ <%= form_with model: @book do |f| %>
 
- <h4>Title</h4>
+  <h4>Title</h4>
  <%= f.text_field :title %>
 
  <h4>Opinion</h4>
  <%= f.text_area :body %>
-
  <%= f.submit 'Create Book' %>
-<% end %>
+ <% end %>
 </div>
 
 <div class="col-md-8 offset-md-1">
 <table class="table table-striped">
- <h1>Books</h1>
+ <h1>Users</h1>
 	<thead>
 		<tr>
-			<th>Title</th>
-			<th>Opinion</th>
+			<th>image</th>
+			<th>name</th>
 		</tr>
 	</thead>
 
